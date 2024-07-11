@@ -7,14 +7,14 @@ class ApiClient(models.Model):
     email = models.EmailField(unique=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(
+        auto_now_add=True,
         verbose_name='creation timestamp',
-        default=timezone.now, 
         db_index=True,
         help_text='Moment when user information is initially obtained'
     )
     updated_at = models.DateTimeField(
+        auto_now=True,
         verbose_name='update timestamp', 
-        auto_now=True, 
         db_index=True, 
         help_text='Moment when user information is updated'
     )
@@ -34,15 +34,15 @@ class ApiKey(models.Model):
     client = models.ForeignKey(ApiClient, on_delete=models.CASCADE, related_name='api_keys')
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(
+        auto_now_add=True,
         verbose_name='creation timestamp',
-        default=timezone.now, 
         db_index=True,
         help_text='Moment when user information is initially obtained'
 
     )
     updated_at = models.DateTimeField(
+        auto_now=True,
         verbose_name='update timestamp', 
-        auto_now=True, 
         db_index=True, 
         help_text='Moment when user information is updated'
     )
@@ -57,19 +57,21 @@ class ApiKey(models.Model):
 
 
 class IdentityInformation(models.Model):
-    identification_number = models.CharField(max_length=20, unique=True)
-    issue_date = models.DateTimeField(auto_now_add=True)
+    identification_number = models.CharField(max_length=20)
+    issue_date = models.DateField()
     issue_place = models.CharField(max_length=100)
     name = models.TextField()
     status = models.CharField(max_length=70)
     created_at = models.DateTimeField(
+        auto_now_add=True,
         verbose_name='creation timestamp', 
-        default=timezone.now, db_index=True, 
+        db_index=True, 
         help_text='Initial moment when user information is initially obtained'
     )
     updated_at = models.DateTimeField(
+        auto_now=True,
         verbose_name='update timestamp', 
-        auto_now=True, db_index=True, 
+        db_index=True, 
         help_text='Moment when user information is updated'
     )
     api_key = models.ForeignKey(ApiKey, on_delete=models.CASCADE, related_name='identity_information')
@@ -77,7 +79,7 @@ class IdentityInformation(models.Model):
     class Meta:
         verbose_name = "Identity Information"
         verbose_name_plural = "Identity Information"
-        unique_together = ['identification_number', 'issue_date']
+        unique_together = ['identification_number', 'api_key']
 
     def __str__(self):
         return f"{self.name} ({self.identification_number})"
@@ -89,14 +91,14 @@ class RequestLog(models.Model):
     response_body = models.JSONField(blank=True, default=dict, help_text='Response')
     status_code = models.IntegerField(help_text='Status code')
     created_at = models.DateTimeField(
+        auto_now_add=True,
         verbose_name='creation timestamp', 
-        default=timezone.now, 
         db_index=True, 
         help_text='Created'
     )
     updated_at = models.DateTimeField(
+        auto_now=True,
         verbose_name='update timestamp', 
-        auto_now=True, 
         db_index=True, 
         help_text='Moment when user information is updated'
     )
