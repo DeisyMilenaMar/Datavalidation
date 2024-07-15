@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'constance',
+    'constance.backends.database', # Backend para almacenar la configuración en la base de datos
     'rnecco_app.apps.RneccoAppConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -135,3 +137,19 @@ REGISTRADURIA_URL = config('REGISTRADURIA_URL')
 DOWNLOAD_DIR = config('DOWNLOAD_DIR')
 CHROME_DRIVER_PATH = config('CHROME_DRIVER_PATH')
 FORCE_DEVICE_SCALE_FACTOR = config('FORCE_DEVICE_SCALE_FACTOR', cast=float)
+
+
+#Manejo de los tiempos de espera 
+
+CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
+
+CONSTANCE_CONFIG = {
+    'IMPLICIT_WAIT': (1, 'Tiempo de espera implícito en segundos'),
+    'EXPLICIT_WAIT': (10, 'Tiempo de espera explícito en segundos'),
+    'PAGE_LOAD_TIMEOUT': (30, 'Tiempo máximo de carga de página en segundos'),
+    'SLEEP_TIME': (5, 'Tiempo de espera fijo en segundos'),
+}
+
+CONSTANCE_CONFIG_FIELDSETS = {
+    'Selenium Config': ('IMPLICIT_WAIT', 'EXPLICIT_WAIT', 'PAGE_LOAD_TIMEOUT', 'SLEEP_TIME'),
+}
