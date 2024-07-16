@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'constance',
+    'constance.backends.database', # Backend para almacenar la configuración en la base de datos
     'rnecco_app.apps.RneccoAppConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -128,3 +130,26 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#Url de la registraduría
+REGISTRADURIA_URL = config('REGISTRADURIA_URL')
+#Lugar donde se descarga el pdf de la consulta a la registraduría 
+DOWNLOAD_DIR = config('DOWNLOAD_DIR')
+CHROME_DRIVER_PATH = config('CHROME_DRIVER_PATH')
+FORCE_DEVICE_SCALE_FACTOR = config('FORCE_DEVICE_SCALE_FACTOR', cast=float)
+
+
+#Manejo de los tiempos de espera 
+
+CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
+
+CONSTANCE_CONFIG = {
+    'ELEMENT_DETECTION_TIMEOUT': (1, 'Wait time in seconds for element detection'),
+    'ELEMENT_APPEARANCE_TIMEOUT': (10, 'Wait time in seconds for element appearance'),
+    'PAGE_LOAD_MAX_TIME': (30, 'Maximum page load time in seconds'),
+    'CERTIFICATE_DOWNLOAD_WAIT': (5, 'Fixed wait time in seconds for certificate download'),
+}
+
+CONSTANCE_CONFIG_FIELDSETS = {
+    'Selenium Configuration': ('ELEMENT_DETECTION_TIMEOUT', 'ELEMENT_APPEARANCE_TIMEOUT', 'PAGE_LOAD_MAX_TIME', 'CERTIFICATE_DOWNLOAD_WAIT'),
+}
