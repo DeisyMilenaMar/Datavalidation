@@ -22,15 +22,15 @@ class RegistryData:
         })
 
         self.driver = webdriver.Chrome(executable_path=config('CHROME_DRIVER_PATH'), options=options)
-        self.driver.set_page_load_timeout(constance_config.PAGE_LOAD_TIMEOUT)
-        self.driver.implicitly_wait(constance_config.IMPLICIT_WAIT)
+        self.driver.set_page_load_timeout(constance_config.PAGE_LOAD_MAX_TIME)
+        self.driver.implicitly_wait(constance_config.ELEMENT_DETECTION_TIMEOUT)
         self.driver.get(config('REGISTRADURIA_URL'))
         self.driver.maximize_window()
 
     def wait_for_element(self, by, value, timeout=None):
 
         if timeout is None:
-            timeout = constance_config.EXPLICIT_WAIT
+            timeout = constance_config.ELEMENT_APPEARANCE_TIMEOUT
         return WebDriverWait(self.driver, timeout).until(
             EC.presence_of_element_located((by, value))
         )
@@ -110,8 +110,7 @@ class RegistryData:
 
     def close_driver(self):
         """This method closes the browser if it is open."""
-
-        sleep(constance_config.SLEEP_TIME)
+        sleep(constance_config.CERTIFICATE_DOWNLOAD_WAIT)
         if hasattr(self, 'driver'):
             self.driver.quit()
 

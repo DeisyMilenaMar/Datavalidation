@@ -144,12 +144,12 @@ FORCE_DEVICE_SCALE_FACTOR = config('FORCE_DEVICE_SCALE_FACTOR', cast=float)
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 
 CONSTANCE_CONFIG = {
-    'IMPLICIT_WAIT': (1, 'Tiempo de espera implícito en segundos'),
-    'EXPLICIT_WAIT': (10, 'Tiempo de espera explícito en segundos'),
-    'PAGE_LOAD_TIMEOUT': (30, 'Tiempo máximo de carga de página en segundos'),
-    'SLEEP_TIME': (5, 'Tiempo de espera fijo en segundos'),
+    'ELEMENT_DETECTION_TIMEOUT': (1, 'Wait time in seconds for element detection'),
+    'ELEMENT_APPEARANCE_TIMEOUT': (10, 'Wait time in seconds for element appearance'),
+    'PAGE_LOAD_MAX_TIME': (30, 'Maximum page load time in seconds'),
+    'CERTIFICATE_DOWNLOAD_WAIT': (5, 'Fixed wait time in seconds for certificate download'),
 }
 
 CONSTANCE_CONFIG_FIELDSETS = {
-    'Selenium Config': ('IMPLICIT_WAIT', 'EXPLICIT_WAIT', 'PAGE_LOAD_TIMEOUT', 'SLEEP_TIME'),
+    'Selenium Configuration': ('ELEMENT_DETECTION_TIMEOUT', 'ELEMENT_APPEARANCE_TIMEOUT', 'PAGE_LOAD_MAX_TIME', 'CERTIFICATE_DOWNLOAD_WAIT'),
 }
